@@ -8,13 +8,13 @@ CREATE TABLE Department 	(
     Department_Name			VARCHAR(50)
 );
 
-DROP TABLE IF EXISTS Position_;
+DROP TABLE IF EXISTS `Position`;
 CREATE TABLE Position_ 		(
 	Position_ID				INT PRIMARY KEY AUTO_INCREMENT,
     Position_Name			ENUM('DEV','Test','Scrum Master','PM')
 );
 
-DROP TABLE IF EXISTS Account_;
+DROP TABLE IF EXISTS `Account`;
 CREATE TABLE Account_		(
 	Account_ID				INT PRIMARY KEY AUTO_INCREMENT,
     Email					VARCHAR(50),
@@ -27,7 +27,7 @@ CREATE TABLE Account_		(
 
 
 
-DROP TABLE IF EXISTS Group_;
+DROP TABLE IF EXISTS `Group`;
 CREATE TABLE Group_			(
 	Group_ID				INT PRIMARY KEY AUTO_INCREMENT,
     Group_Name				VARCHAR(255),
