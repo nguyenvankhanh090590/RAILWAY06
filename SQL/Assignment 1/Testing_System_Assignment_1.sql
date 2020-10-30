@@ -2,93 +2,93 @@ DROP DATABASE IF EXISTS testing_system_assignment_1;
 CREATE DATABASE testing_system_assignment_1;
 USE testing_system_assignment_1;
 
-DROP TABLE IF EXISTS Department;
-CREATE TABLE Department 	(
-	Department_ID			INT PRIMARY KEY AUTO_INCREMENT,
-    Department_Name			VARCHAR(50)
+DROP TABLE IF EXISTS department;
+CREATE TABLE department (
+	department_id			INT PRIMARY KEY AUTO_INCREMENT,
+    department_name			VARCHAR(50)
 );
 
-DROP TABLE IF EXISTS `Position`;
-CREATE TABLE Position_ 		(
-	Position_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Position_Name			ENUM('DEV','Test','Scrum Master','PM')
+DROP TABLE IF EXISTS `position`;
+CREATE TABLE `position` (
+	position_id				INT PRIMARY KEY AUTO_INCREMENT,
+    position_name			ENUM('DEV','Test','Scrum Master','PM')
 );
 
-DROP TABLE IF EXISTS `Account`;
-CREATE TABLE Account_		(
-	Account_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Email					VARCHAR(50),
-    Username				VARCHAR(50),
-    Fullname				VARCHAR(50),
-    Department_ID			INT,
-    Position_ID				INT,
-    Create_date				DATE
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+	account_id				INT PRIMARY KEY AUTO_INCREMENT,
+    email					VARCHAR(50),
+    username				VARCHAR(50),
+    fullname				VARCHAR(50),
+    department_id			INT,
+    position_id				INT,
+    create_date				DATE
 );
 
 
 
 DROP TABLE IF EXISTS `Group`;
-CREATE TABLE Group_			(
-	Group_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Group_Name				VARCHAR(255),
-    Creator_ID				INT,
-    Create_Date				DATE
+CREATE TABLE `Group` (
+	group_id				INT PRIMARY KEY AUTO_INCREMENT,
+    group_name				VARCHAR(255),
+    creator_id				INT,
+    create_date				DATE
 );
 
-DROP TABLE IF EXISTS Group_Account;
-CREATE TABLE Group_Account	(
-	Account_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Group_ID				INT,
-    Join_Date				DATE
-);
-
-
-
-DROP TABLE IF EXISTS Type_Question;
-CREATE TABLE Type_Question	(
-	Type_ID					INT PRIMARY KEY AUTO_INCREMENT,
-    Type_Name				ENUM('Essay','Multiple-Choice')
-);
-
-DROP TABLE IF EXISTS Category_Question;
-CREATE TABLE Category_Question	(
-	Category_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Category_Name			VARCHAR(50)
-);
-
-DROP TABLE IF EXISTS Question;
-CREATE TABLE Question	(
-	Question_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Content					VARCHAR(255),
-    Category_ID				INT,
-    Type_ID					INT,
-    Creator_ID				INT,
-    Create_Date				DATE
+DROP TABLE IF EXISTS group_account;
+CREATE TABLE group_account (
+	group_id				INT PRIMARY KEY AUTO_INCREMENT,
+    account_id				INT,
+    join_date				DATE
 );
 
 
 
-DROP TABLE IF EXISTS Answer;
-CREATE TABLE Answer		(
-	Answer_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Content					VARCHAR(255),
-    Question_ID				INT,
-    Is_Correct				ENUM('True','False')
+DROP TABLE IF EXISTS type_question;
+CREATE TABLE type_question (
+	type_id					INT PRIMARY KEY AUTO_INCREMENT,
+    type_name				ENUM('Essay','Multiple-Choice')
 );
 
-DROP TABLE IF EXISTS Exam;
-CREATE TABLE Exam		(
-	Exam_ID					INT PRIMARY KEY AUTO_INCREMENT,
-    Code_					VARCHAR(10),
-    Title					VARCHAR(50),
-    Category_ID				INT,
-    Duration				TIME,
-    Creator_ID				INT,
-    Create_Date				DATE
+DROP TABLE IF EXISTS category_question;
+CREATE TABLE qategory_question (
+	category_id				INT PRIMARY KEY AUTO_INCREMENT,
+    category_name			VARCHAR(50)
 );
 
-DROP TABLE IF EXISTS Exam_Question;
-CREATE TABLE Exam_Question	(
-	Question_ID				INT PRIMARY KEY AUTO_INCREMENT,
-    Exam_ID					INT
+DROP TABLE IF EXISTS question;
+CREATE TABLE question (
+	question_id				INT PRIMARY KEY AUTO_INCREMENT,
+    content					VARCHAR(255),
+    category_id				INT,
+    type_id					INT,
+    creator_id				INT,
+    create_date				DATE
+);
+
+
+
+DROP TABLE IF EXISTS answer;
+CREATE TABLE answer (
+	answer_id				INT PRIMARY KEY AUTO_INCREMENT,
+    content					VARCHAR(255),
+    question_id				INT,
+    is_correct				ENUM('True','False')
+);
+
+DROP TABLE IF EXISTS exam;
+CREATE TABLE exam (
+	exam_id					INT PRIMARY KEY AUTO_INCREMENT,
+    `code`					VARCHAR(10),
+    title					VARCHAR(50),
+    category_id				INT,
+    duration				TIME,
+    creator_id				INT,
+    create_date				DATE
+);
+
+DROP TABLE IF EXISTS exam_question;
+CREATE TABLE exam_question (
+	exam_id					INT PRIMARY KEY AUTO_INCREMENT,
+    question_id				INT
 );
