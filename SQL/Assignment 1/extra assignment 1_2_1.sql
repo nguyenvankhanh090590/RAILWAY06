@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS assignment_01;
-CREATE DATABASE IF NOT EXISTS assignment_01;
-USE assignment_01;
+DROP DATABASE IF EXISTS extra_assignment_01_2_1;
+CREATE DATABASE IF NOT EXISTS extra_assignment_01_2_1;
+USE extra_assignment_01_2_1;
 
 DROP TABLE IF EXISTS trainee;
 CREATE TABLE IF NOT EXISTS trainee (

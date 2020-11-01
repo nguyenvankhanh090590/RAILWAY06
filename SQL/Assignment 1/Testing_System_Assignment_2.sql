@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `group` (
 	group_id			SMALLINT 		UNSIGNED 		PRIMARY KEY 		AUTO_INCREMENT,
     group_name			VARCHAR(200),
     creator_id			SMALLINT 		UNSIGNED,
-    create_date			DATE
+    create_date			DATE,
+    FOREIGN KEY (creator_id)			REFERENCES `account`(account_id)
 );
 
 DROP TABLE IF EXISTS group_account;
