@@ -8,17 +8,11 @@ CREATE TABLE IF NOT EXISTS trainee (
     full_name			NVARCHAR(100),
     birth_date			DATE,
     gender				ENUM('male','female','unknown')	DEFAULT 'unknown',
-    et_iq				TINYINT			UNSIGNED,
-    et_gmath			TINYINT			UNSIGNED,
-    et_english			TINYINT			UNSIGNED,
+    et_iq				TINYINT CHECK(et_iq BETWEEN 0 AND 20),
+    et_gmath			TINYINT CHECK(et_gmath BETWEEN 0 AND 20),
+    et_english			TINYINT CHECK(et_english BETWEEN 0 AND 50),
     training_class		VARCHAR(50),
-    evaluation_notes	TEXT,
-						CONSTRAINT et_iq
-                        CHECK(et_iq BETWEEN 0 AND 20),
-                        CONSTRAINT et_gmath
-                        CHECK(et_gmath BETWEEN 0 AND 20),
-                        CONSTRAINT et_english
-                        CHECK(et_english BETWEEN 0 AND 50)
+    evaluation_notes	TEXT,                        
 	);
     
 ALTER TABLE trainee
