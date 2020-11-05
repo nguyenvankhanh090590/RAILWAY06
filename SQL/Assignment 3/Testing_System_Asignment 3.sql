@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS testing_system_assignment_3;
 CREATE DATABASE IF NOT EXISTS testing_system_assignment_3;
 USE testing_system_assignment_3;
-
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS department;
 CREATE TABLE IF NOT EXISTS department (
 	department_id	TINYINT	UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -137,6 +137,8 @@ VALUES
     ('duckdollar@gmail.com',		'Duck',		'Lẩu Nướng',		'10',		'3',		'2004-4-19'),
     ('beheothichboiloi@icloud.com',	'Hợi',		'Lợn Cắp Nách',		'3',		'3',		'2020-1-24'),
     ('nhalauxehoi@mail.ru',			'Nha',		'Dao thọc tiết lợn','2',		'4',		'2020-1-23'),
+    ('nhalauxehoi@mail.ru1',		'Nha1',		'Dao thọc tiết lợn1','11',		'4',		'2020-1-23'),
+    ('nhalauxehoi@mail.ru2',		'Nha2',		'Dao thọc tiết lợn2','12',		'4',		'2020-1-23'),
     ('andersonpt@mail.en',			'Anderson',	'Bố Cái Đại Vương',	'7',		'2',		'2018-9-2');
 
 INSERT INTO 
@@ -255,17 +257,28 @@ WHERE
 SELECT 
     *,
     LENGTH(fullname) AS number_of_characters_of_fullname,
-    CONCAT(fullname) AS longest_fullname
+    COUNT(fullname),
+    GROUP_CONCAT(fullname) AS longest_fullname
 FROM
     `account`
 GROUP BY LENGTH(fullname)
-ORDER BY number_of_characters_of_fullname DESC
+ORDER BY LENGTH(fullname) DESC
 LIMIT 1;
--- Q5 lấy ra thông tin account có fullname dàu nhất và thuộc phòng ban có id bằng 3
+	-- or
+SELECT 
+    *
+FROM
+    `account`
+WHERE
+    LENGTH(fullname) = (SELECT 
+            MAX(LENGTH(fullname))
+        FROM
+            `account`);
+-- Q5 lấy ra thông tin account có fullname dài nhất và thuộc phòng ban có id bằng 3
 SELECT 
     *,
     LENGTH(fullname) AS number_of_characters_of_fullname,
-    CONCAT(fullname) AS longest_fullname
+    GROUP_CONCAT(fullname) AS longest_fullname
 FROM
     `account`
 WHERE department_id = 3
@@ -294,7 +307,8 @@ WHERE
         AND create_date < '2019-12-20';
 -- Q9 lấy ra 5 group được tạo ra gần đây nhất
 SELECT 
-    create_date, concat(group_name)
+    create_date,
+    GROUP_CONCAT(group_name)
 FROM
     `group`
 GROUP BY create_date
