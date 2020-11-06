@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS exam_question (
     FOREIGN KEY (exam_id) 				REFERENCES exam(exam_id) ON DELETE CASCADE
 );
 
--- Q1 Thêm ít nhất 10 bản ghi vào mỗi bảng
+
 INSERT INTO department(department_name)
 VALUES
 	('Giám đốc'),
@@ -128,45 +128,45 @@ VALUES
 INSERT INTO 
 `account`(email, 					username, 	fullname, 		department_id, position_id, create_date)
 VALUES
-	('heoquay@gmail.com',			'Heo',		'Ngọc Tuấn',		'2',		'1',		'2012-12-14'),
-	('gaquay@gmail.com',			'Gà',		'Thị Nở',			'5',		'1',		'2011-3-5'),
-    ('vitquaybackinh@gmail.com',	'Vịt',		'Trương Bình',		'1',		'1',		'2016-9-8'),
-    ('thoquay@icloud.com',			'Thỏ',		'Đại Gia',			'6',		'2',		'2019-10-23'),
-    ('candauvan@vied.moet.edu.vn',	'Vân',		'Đại Phong',		'3',		'1',		'2015-4-27'),
-    ('tonngokhong@icloud.com',		'Ngô',		'Đại Vương',		'3',		'4',		'2009-3-11'),
-    ('duckdollar@gmail.com',		'Duck',		'Lẩu Nướng',		'10',		'3',		'2004-4-19'),
-    ('beheothichboiloi@icloud.com',	'Hợi',		'Lợn Cắp Nách',		'3',		'3',		'2020-1-24'),
-    ('nhalauxehoi@mail.ru',			'Nha',		'Dao thọc tiết lợn','2',		'4',		'2020-1-23'),
-    ('nhalauxehoi@mail.ru1',		'Nha1',		'Dao thọc tiết lợn1','11',		'4',		'2020-1-23'),
-    ('nhalauxehoi@mail.ru2',		'Nha2',		'Dao thọc tiết lợn2','12',		'4',		'2020-1-23'),
-    ('andersonpt@mail.en',			'Anderson',	'Bố Cái Đại Vương',	'7',		'2',		'2018-9-2');
+	('heoquay@gmail.com',			'Heo',		'Ngọc Tuấn',		2,		1,		'2012-12-14'),
+	('gaquay@gmail.com',			'Gà',		'Thị Nở',			5,		1,		'2011-3-5'),
+    ('vitquaybackinh@gmail.com',	'Vịt',		'Trương Bình',		1,		1,		'2016-9-8'),
+    ('thoquay@icloud.com',			'Thỏ',		'Đại Gia',			6,		2,		'2019-10-23'),
+    ('candauvan@vied.moet.edu.vn',	'Vân',		'Đại Phong',		3,		1,		'2015-4-27'),
+    ('tonngokhong@icloud.com',		'Ngô',		'Đại Vương',		3,		4,		'2009-3-11'),
+    ('duckdollar@gmail.com',		'Duck',		'Lẩu Nướng',		1,		3,		'2004-4-19'),
+    ('beheothichboiloi@icloud.com',	'Hợi',		'Lợn Cắp Nách',		3,		3,		'2020-1-24'),
+    ('nhalauxehoi@mail.ru',			'Nha',		'Dao thọc tiết lợn',2,		4,		'2020-1-23'),
+    ('nhalauxehoi@mail.ru1',		'Nha1',		'Dao thọc tiết lợn1',11,	4,		'2020-1-23'),
+    ('nhalauxehoi@mail.ru2',		'Nha2',		'Dao thọc tiết lợn2',12,	4,		'2020-1-23'),
+    ('andersonpt@mail.en',			'Anderson',	'Bố Cái Đại Vương',	7,		2,		'2018-9-2');
 
 INSERT INTO 
 `group`( group_name, 	creator_id, 	create_date)
 VALUES
-		('Đồ nướng',	'2',			'2015-11-20'),
-        ('Đồ hấp',		'2',			'2010-3-8'),
-        ('Đồ luộc',		'2',			'2011-4-30'),
-        ('Ăn sống',		'2',			'2008-5-1'),
-        ('Đồ uống',		'10',			'2012-4-19'),
-        ('Tiết canh',	'1',			'2016-5-9'),
-        ('Mì sợi',		'3',			'2018-10-31'),
-        ('Bánh bao',	'1',			'2020-9-2'),
-        ('Bánh giò',	'4',			'2019-2-3'),
-        ('Chân đất',	'7',			'2017-3-26');
+		('Đồ nướng',	2,			'2015-11-20'),
+        ('Đồ hấp',		2,			'2010-3-8'),
+        ('Đồ luộc',		2,			'2011-4-30'),
+        ('Ăn sống',		2,			'2008-5-1'),
+        ('Đồ uống',		10,			'2012-4-19'),
+        ('Tiết canh',	1,			'2016-5-9'),
+        ('Mì sợi',		3,			'2018-10-31'),
+        ('Bánh bao',	1,			'2020-9-2'),
+        ('Bánh giò',	4,			'2019-2-3'),
+        ('Chân đất',	7,			'2017-3-26');
 INSERT INTO
 group_account(group_id, account_id, join_date)
 VALUES
-			('1',		'5',			'2015-11-25'),
-            ('1',		'6',			'2010-3-18'),
-            ('2',		'7',			'2011-5-15'),
-            ('3',		'2',			'2008-5-20'),
-            ('4',		'4',			'2012-4-29'),
-            ('4',		'9',			'2016-5-20'),
-            ('5',		'10',			'2018-10-31'),
-            ('5',		'1',			'2020-9-20'),
-            ('7',		'8',			'2019-2-11'),
-            ('7',		'3',			'2017-4-1');
+			(1,		5,			'2015-11-25'),
+            (1,		6,			'2010-3-18'),
+            (2,		7,			'2011-5-15'),
+            (3,		2,			'2008-5-20'),
+            (4,		4,			'2012-4-29'),
+            (4,		9,			'2016-5-20'),
+            (5,		10,			'2018-10-31'),
+            (5,		1,			'2020-9-20'),
+            (7,		8,			'2019-2-11'),
+            (7,		3,			'2017-4-1');
 INSERT INTO
 type_question(type_name)
 VALUES
@@ -188,58 +188,58 @@ VALUES
 INSERT INTO
 question(content, 	category_id,	 type_id, 		creator_id, 	create_date)
 VALUES
-		(N'Câu hỏi 1',		'1',			'1',			'1',		'2011-2-14'),
-		(N'Câu hỏi 2',		'3',			'2',			'1',		'2012-3-14'),
-        ('Unknown',		'4',			'2',			'1',		'2013-2-14'),
-        ('Unknown',		'2',			'1',			'3',		'2019-3-14'),
-        ('Unknown',		'6',			'2',			'3',		'2010-1-14'),
-        ('Unknown',		'8',			'1',			'6',		'2015-3-14'),
-        ('Unknown',		'9',			'1',			'6',		'2018-4-14'),
-        ('Unknown',		'10',			'1',			'10',		'2019-5-14'),
-        ('Unknown',		'7',			'2',			'10',		'2017-2-14'),
-        ('Unknown',		'5',			'2',			'10',		'2019-1-14');
+		(N'Câu hỏi 1',	1,			1,				1,				'2011-2-14'),
+		(N'Câu hỏi 2',	3,			2,				1,				'2012-3-14'),
+        ('Unknown3',	4,			2,				1,				'2013-2-14'),
+        ('Unknown4',	2,			1,				3,				'2019-3-14'),
+        ('Unknown5',	6,			2,				3,				'2010-1-14'),
+        ('Unknown6',	8,			1,				6,				'2015-3-14'),
+        ('Unknown7',	9,			1,				6,				'2018-4-14'),
+        ('Unknown8',	10,			1,				10,				'2019-5-14'),
+        ('Unknown9',	7,			2,				10,				'2017-2-14'),
+        ('Unknown10',	5,			2,				10,				'2019-1-14');
 
 INSERT INTO
 answer(content, question_id, is_correct)
 VALUES
-	('Unknown',		'1',		'True'),
-    ('Unknown',		'3',		'False'),
-    ('Unknown',		'4',		'False'),
-    ('Unknown',		'1',		'True'),
-    ('Unknown',		'2',		'True'),
-    ('Unknown',		'6',		'True'),
-    ('Unknown',		'8',		'True'),
-    ('Unknown',		'1',		'True'),
-    ('Unknown',		'1',		'True'),
-    ('Unknown',		'10',		'False');
+	('Unknown1',		1,		'True'),
+    ('Unknown2',		3,		'False'),
+    ('Unknown3',		4,		'False'),
+    ('Unknown4',		1,		'True'),
+    ('Unknown5',		2,		'True'),
+    ('Unknown6',		6,		'True'),
+    ('Unknown7',		8,		'True'),
+    ('Unknown8',		1,		'True'),
+    ('Unknown9',		1,		'True'),
+    ('Unknown10',		10,		'False');
     
 INSERT INTO
 exam(	`code`,			title, 						category_id,	duration, 	creator_id, create_date)
 VALUES
-		('A0002',		'Đề thi về my SQL',			'3',					'180',		'1',		'2019-6-21'),
-        ('B0014',		'Đề thi về C++',			'4',					'45',		'1',		'2019-6-23'),
-        ('A0033',		'Đề thi về Python',			'6',					'180',		'1',		'2019-6-22'),
-        ('V1024',		'Đề thi về SQLServer',		'7',					'200',		'10',		'2020-6-25'),
-        ('T4567',		'Đề thi về Pascal',			'8',					'45', 		'8',		'2020-6-27'),
-        ('G2984',		'Đề thi về Postman',		'1',					'60',		'8',		'2020-6-28'),
-        ('H4565',		'Đề thi về .NET',			'2',					'30',		'10',		'2019-6-29'),
-        ('O8763',		'Đề thi chung',				'3',					'20',		'10',		'2020-6-30'),
-        ('R2345',		'Đề thi về RUBY',			'5',					'120',		'1',		'2019-6-24'),
-        ('P9840',		'Đề thi về JAVA',			'10',					'50',		'1',		'2019-6-29');
+		('A0002',		'Đề thi về my SQL',			3,					180,	1,		'2019-6-21'),
+        ('B0014',		'Đề thi về C++',			4,					45,		1,		'2019-6-23'),
+        ('A0033',		'Đề thi về Python',			6,					180,	1,		'2019-6-22'),
+        ('V1024',		'Đề thi về SQLServer',		7,					200,	10,		'2020-6-25'),
+        ('T4567',		'Đề thi về Pascal',			8,					45, 	8,		'2020-6-27'),
+        ('G2984',		'Đề thi về Postman',		1,					60,		8,		'2020-6-28'),
+        ('H4565',		'Đề thi về .NET',			2,					30,		10,		'2019-6-29'),
+        ('O8763',		'Đề thi chung',				3,					20,		10,		'2020-6-30'),
+        ('R2345',		'Đề thi về RUBY',			5,					120,	1,		'2019-6-24'),
+        ('P9840',		'Đề thi về JAVA',			10,					50,		1,		'2019-6-29');
         
 INSERT INTO
 exam_question(exam_id, question_id)
 VALUES
-			('1',		'10'),
-            ('2',		'7'),
-            ('3',		'1'),
-            ('4',		'6'),
-            ('5',		'9'),
-            ('6',		'4'),
-            ('7',		'2'),
-            ('8',		'5'),
-            ('9',		'3'),
-            ('10',		'8');
+			(1,			10),
+            (1,			7),
+            (3,			1),
+            (4,			6),
+            (5,			4),
+            (6,			4),
+            (6,			2),
+            (8,			5),
+            (9,			3),
+            (10,		8);
             
 -- Q2 lấy tất cả các phòng ban
 SELECT 
