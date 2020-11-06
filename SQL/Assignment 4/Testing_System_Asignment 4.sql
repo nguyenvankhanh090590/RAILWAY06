@@ -392,17 +392,19 @@ HAVING COUNT(account_id) = (SELECT
     ORDER BY COUNT(account_id)
     LIMIT 1);
 	
-    -- Q11 Thống kê mỗi phòng ban có bao nhiêu DEV, Test, Scrum Master, PM
+    -- Q11 Thống kê mỗi phòng ban có bao nhiêu nhân viên thuộc 1 trong 4 chức vụ (DEV, Test, Scrum Master, PM)
 SELECT 
-    department_id, department_name, COUNT(position_id)
+    *, COUNT(department_id)
 FROM
     `account`
         RIGHT JOIN
-    department USING (department_id)
+    `position` USING (position_id)
+WHERE
+    position_name IN ('Dev' , 'Test', 'Scrum Master', 'PM')
 GROUP BY department_id
 ORDER BY department_id;
 
-	-- Q12 Lấy thông tin chit htieets của câu hỏi bao gồm: thông tin cơ bản của question, loại câu hỏi, creator, câu trả lời ...
+	-- Q12 Lấy thông tin chi tiết của câu hỏi bao gồm: thông tin cơ bản của question, loại câu hỏi, creator, câu trả lời ...
 SELECT 
     a.question_id,
     a.content,

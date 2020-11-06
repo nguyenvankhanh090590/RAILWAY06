@@ -307,11 +307,9 @@ WHERE
         AND create_date < '2019-12-20';
 -- Q9 lấy ra 5 group được tạo ra gần đây nhất
 SELECT 
-    create_date,
-    GROUP_CONCAT(group_name)
+    create_date    
 FROM
     `group`
-GROUP BY create_date
 ORDER BY create_date DESC
 LIMIT 5;
 -- Q10 Đếm số nhân viên thuộc department có id bằng 2
