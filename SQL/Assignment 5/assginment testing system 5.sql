@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS testing_system_assignment_3;
-CREATE DATABASE IF NOT EXISTS testing_system_assignment_3;
-USE testing_system_assignment_3;
+DROP DATABASE IF EXISTS testing_system_assignment_5;
+CREATE DATABASE IF NOT EXISTS testing_system_assignment_5;
+USE testing_system_assignment_5;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS department;
 CREATE TABLE IF NOT EXISTS department (
@@ -128,18 +128,18 @@ VALUES
 INSERT INTO 
 `account`(email, 					username, 	fullname, 		department_id, position_id, create_date)
 VALUES
-	('heoquay@gmail.com',			'Heo',		'Ngọc Tuấn',		2,		1,		'2012-12-14'),
-	('gaquay@gmail.com',			'Gà',		'Thị Nở',			5,		1,		'2011-3-5'),
-    ('vitquaybackinh@gmail.com',	'Vịt',		'Trương Bình',		1,		1,		'2016-9-8'),
-    ('thoquay@icloud.com',			'Thỏ',		'Đại Gia',			6,		2,		'2019-10-23'),
-    ('candauvan@vied.moet.edu.vn',	'Vân',		'Đại Phong',		3,		1,		'2015-4-27'),
-    ('tonngokhong@icloud.com',		'Ngô',		'Đại Vương',		3,		4,		'2009-3-11'),
-    ('duckdollar@gmail.com',		'Duck',		'Lẩu Nướng',		1,		3,		'2004-4-19'),
-    ('beheothichboiloi@icloud.com',	'Hợi',		'Lợn Cắp Nách',		3,		3,		'2020-1-24'),
-    ('nhalauxehoi@mail.ru',			'Nha',		'Dao thọc tiết lợn',2,		4,		'2020-1-23'),
-    ('nhalauxehoi@mail.ru1',		'Nha1',		'Dao thọc tiết lợn1',11,	4,		'2020-1-23'),
-    ('nhalauxehoi@mail.ru2',		'Nha2',		'Dao thọc tiết lợn2',12,	4,		'2020-1-23'),
-    ('andersonpt@mail.en',			'Anderson',	'Bố Cái Đại Vương',	7,		2,		'2018-9-2');
+	('heoquay@gmail.com',			'Heo',		'Nguyễn Ngọc Tuấn',		2,		1,		'2012-12-14'),
+	('gaquay@gmail.com',			'Gà',		'Đào Thị Nở',			5,		1,		'2011-3-5'),
+    ('vitquaybackinh@gmail.com',	'Vịt',		'Lê Trương Bình',		1,		1,		'2016-9-8'),
+    ('thoquay@icloud.com',			'Thỏ',		'Lã Đại Gia',			6,		2,		'2019-10-23'),
+    ('candauvan@vied.moet.edu.vn',	'Vân',		'Nguyễn Đại Phong',		3,		1,		'2015-4-27'),
+    ('tonngokhong@icloud.com',		'Ngô',		'Trần Đại Vương',		3,		4,		'2009-3-11'),
+    ('duckdollar@gmail.com',		'Duck',		'Đinh Lẩu Nướng',		1,		3,		'2004-4-19'),
+    ('beheothichboiloi@icloud.com',	'Hợi',		'Ninh Lợn Cắp Nách',	3,		3,		'2020-1-24'),
+    ('nhalauxehoi@mail.ru',			'Nha',		'Hồ Dao thọc tiết lợn',	2,		4,		'2020-1-23'),
+    ('nhalauxehoi@mail.ru1',		'Nha1',		'Hoàng Yên Ý',			11,		4,		'2020-1-23'),
+    ('nhalauxehoi@mail.ru2',		'Nha2',		'Trương Văn Vũ',		12,		4,		'2020-1-23'),
+    ('andersonpt@mail.en',			'Anderson',	'Bố Cái Đại Vương',		7,		2,		'2018-9-2');
 
 INSERT INTO 
 `group`( group_name, 	creator_id, 	create_date)
@@ -241,127 +241,87 @@ VALUES
             (9,			3),
             (10,		8);
             
--- Q2 lấy tất cả các phòng ban
+	-- ****************** Q1 danh sách nhân viên thuộc phòng ban sale *************
+
+CREATE OR REPLACE VIEW view_1 AS
 SELECT 
-    *
+    account_id, fullname, email, department_name
 FROM
-    department;
--- Q3 lấy ra id của phòng ban 'Sale'    
-SELECT 
-    department_id
-FROM
-    department
+    `account`
+        JOIN
+	department USING (department_id)
 WHERE
     department_name = 'Sale';
--- Q4 lấy ra thông tin account có fullname dài nhất
+    
+-- ******************* Q2 Thông tin account tham gia vào nhiều group nhất ************
+
+CREATE OR REPLACE VIEW view_2 AS
 SELECT 
-    *,
-    LENGTH(fullname) AS number_of_characters_of_fullname,
-    COUNT(fullname),
-    GROUP_CONCAT(fullname) AS longest_fullname
+    account_id, fullname, email, GROUP_CONCAT(group_id)
 FROM
     `account`
-GROUP BY LENGTH(fullname)
-ORDER BY LENGTH(fullname) DESC
-LIMIT 1;
-	-- or
-SELECT 
-    *
-FROM
-    `account`
-WHERE
-    LENGTH(fullname) = (SELECT 
-            MAX(LENGTH(fullname))
+        JOIN
+    group_account USING (account_id)
+GROUP BY account_id
+HAVING COUNT(department_id) = (SELECT 
+        MAX(number_of_group)
+    FROM
+        (SELECT 
+            COUNT(group_id) AS number_of_group
         FROM
-            `account`);
--- Q5 lấy ra thông tin account có fullname dài nhất và thuộc phòng ban có id bằng 3
-SELECT 
-    *,
-    LENGTH(fullname) AS number_of_characters_of_fullname,
-    GROUP_CONCAT(fullname) AS longest_fullname
-FROM
-    `account`
-WHERE department_id = 3
-GROUP BY LENGTH(fullname)
-ORDER BY number_of_characters_of_fullname DESC
-LIMIT 1;
--- Q6 lấy ra tên group đã tham gia trước ngày 20/12/2019
-SELECT *
-FROM `group`
-WHERE create_date <'2019-12-20';
--- Q7 lấy ra id của câu hỏi có >= 4 câu trả lời
-SELECT 
-    question_id, COUNT(question_id) AS number_of_answers
-FROM
-    answer
-GROUP BY question_id
-HAVING COUNT(question_id) >= 4
-ORDER BY COUNT(question_id) DESC;
- -- Q8 lấy ra các mã đề thi có thời gian thi >= 60 phút và được tạo tước ngày 20/12/2019
- SELECT 
-    exam_id, duration, create_date
-FROM
-    exam
-WHERE
-    duration >= 60
-        AND create_date < '2019-12-20';
--- Q9 lấy ra 5 group được tạo ra gần đây nhất
-SELECT 
-    create_date    
-FROM
-    `group`
-ORDER BY create_date DESC
-LIMIT 5;
--- Q10 Đếm số nhân viên thuộc department có id bằng 2
-SELECT 
-    COUNT(department_id) AS number_of_account
-FROM
-    `account`
-WHERE
-    department_id = 2;
--- Q11 Lấy ra nhân viên có tên bắt đầu bằng chứ D và kết thúc bằng chữ o
-SELECT 
-    *
-FROM
-    `account`
-WHERE
-    fullname LIKE ('%D%o%');
--- Q12 xóa tất cả các exam được tạo trước ngày 20/12/2019
-COMMIT;
-DELETE FROM exam 
-WHERE
-    create_date < '2019-12-20';
-SELECT 
-    *
-FROM
-    exam;
--- Q13 xóa tất cả các câu hỏi có nội dung bắt đầu bằng từ 'câu hỏi'
-COMMIT;
-DELETE FROM question 
-WHERE
-    content LIKE (N'câu hỏi%');
-SELECT 
-    *
-FROM
-    question;
--- Q14 update thông tin của account cá id = 5 thành tên Nguyễn Bá Lộc và email thành loc.nguyenba@vti.com.vn
-UPDATE `account` 
-SET 
-    fullname = 'Nguyễn Bá Lộc',
-	email = 'loc.nguyenba@vti.com.vn'
-WHERE
-    account_id = 5;
-SELECT 
-    *
-FROM
-    `account`;
--- Q15 update account có id = 5 thuộc group có id bằng 4
-UPDATE group_account 
-SET 
-    group_id = 4
-WHERE
-    account_id = 5;
-SELECT 
-    *
-FROM
-    group_account;
+            group_account
+        GROUP BY account_id) AS number_group);
+        
+-- ******************* Q3 lấy ra các câu hỏi có content quá dài (>15 ký tự) và xóa nó đi *************
+
+INSERT INTO question 	(content, 	category_id, 	type_id, 	creator_id, 	create_date)
+VALUES 					(N'Thế quái nào không xóa được',
+									1,				3,			5,				'2020-08-11');
+CREATE OR REPLACE VIEW view_3 AS
+    SELECT 
+        *, length(content)
+    FROM
+        question
+    WHERE
+        LENGTH(content) > 15;
+DELETE
+FROM view_3;
+
+ -- ************ Q4 danh sách các phòng ban có nhiều nhân viên nhất ********************
+
+CREATE OR REPLACE VIEW view_4 AS
+    SELECT 
+        department_id,
+        COUNT(fullname) AS number_of_account,
+        GROUP_CONCAT(fullname) AS list_of_account
+    FROM
+        department
+            JOIN
+        `account` USING (department_id)
+    GROUP BY department_id
+    HAVING COUNT(fullname) = (SELECT 
+            MAX(number_of_staff)
+        FROM
+            (SELECT 
+                COUNT(fullname) AS number_of_staff
+            FROM
+                department
+            JOIN `account` USING (department_id)
+            GROUP BY department_id) AS number_staff);
+-- ********************** Q5 câu hỏi do user họ Nguyễn tạo ***************         
+
+CREATE OR REPLACE VIEW view_5 AS
+    SELECT 
+        question_id
+    FROM
+        question q
+            JOIN
+        `account` a ON q.creator_id = a.account_id
+    WHERE
+        fullname LIKE ('Nguyen%');
+        
+	Select* from view_1;
+    Select* from view_2;
+    Select* from view_3;
+    Select* from view_4;
+    Select* from view_5;

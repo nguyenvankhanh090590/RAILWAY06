@@ -20,22 +20,6 @@ ALTER TABLE trainee
 ADD COLUMN 	VTI_account VARCHAR(100)	UNIQUE KEY		NOT NULL
 AFTER		gender;
 
-DROP TABLE IF EXISTS table_01;
-CREATE TABLE IF NOT EXISTS table_01 (
-	id					INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `name`				NVARCHAR(100),
-    `code`				CHAR(5),
-    modifield_date		DATETIME DEFAULT NOW()
-);
-
-DROP TABLE IF EXISTS table_02;
-CREATE TABLE IF NOT EXISTS table_02 (
-	id					INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `name`				VARCHAR(100),
-    `birth_date`		DATE,
-    gender				BIT, #ENUM('0','1','unknown')
-    is_deleted_flag		BIT NOT NULL #hoac ENUM('0','1')
-);
 
 /* ********Q1 thêm ít nhất 10 bản ghi vào table ******* */
 INSERT INTO 
@@ -50,22 +34,58 @@ VALUES
             ('Nguyễn Văn Giờ',		'1996-04-19','female',	'G1',				'12',		'20',		'9',		'class12',				'note7'),
             ('Đinh Văn Hết',		'1999-07-21','female',	'H1',				'16',		'20',		'31',		'class12',				'note8'),
             ('Ninh Văn Iinh',		'1997-08-24','female',	'I1',				'17',		'5',		'27',		'class12',				NULL),
-            ('Nguyễn Văn Kim Lương','1999-05-01','female',	'K1',				'8',		'6',		'33',		'class11',				'note10'),
+            ('Nguyễn Văn Kim Lương','1999-05-01','female',	'K1',				'8',		'11',		'33',		'class11',				'note10'),
             ('Trần Văn Lan',		'2002-06-27','male',	'L1',				'11',		'19',		'45',		'class13',				'note11'),
-            ('Mạc Minh Hiếu',		'2001-11-20','unknown',	'M1',				'0',		'19',		'39',		'class12',				'note12'),
-            ('Lung Thị Linh',		'1995-03-15','male',	'N1',				'0',		'13',		'10',		'class13',				'note13'),
+            ('Mạc Minh Hiếu',		'2001-11-20','unknown',	'M1',				'20',		'19',		'39',		'class12',				'note12'),
+            ('Lung Thị Linh',		'1995-01-15','male',	'N1',				'9',		'13',		'10',		'class13',				'note13'),
             ('Nguyễn Vê',			'2003-04-17','female',	'O1',				'9',		'10',		'34',		'class12',				NULL),
             ('Lê Ánh',				'2002-02-11','unknown',	'P1',				'10',		'17',		'45',		'class13',				NULL);
             
 /* *************** Q2 viết lệnh để lấy ra tất cả các thực tập sinh đã vượt qua bài test đầu vào và nhóm chúng thành các tháng sinh khác nhau************* */
 SELECT 
-    trainee_id, fullname
+    trainee_id, month(birth_date) as month_of_birthday, GROUP_CONCAT(fullname)
+FROM
+    trainee
+GROUP BY MONTH(birth_date)
+ORDER BY trainee_id;
+
+/* ************* Q3 Viết lệnh để lấy ra thực tập sinh có tên dài nhất với các thông tin sau: tên, tuổi, các thông tin cơ bản (như đã được định nghĩa trong table)************** */
+
+SELECT 
+    fullname, year(now()) - year (birth_date) AS age, gender, VTI_account, et_iq, et_gmath, et_english, training_class,	evaluation_notes
+FROM
+    trainee
+HAVING LENGTH(fullname) = (	SELECT 
+								MAX(ky_tu)
+							FROM
+								(SELECT 
+									LENGTH(fullname) AS ky_tu
+								FROM
+									trainee) AS do_dai_ten);
+
+/* ************************ Q4 viết lệnh để lấy ra tất cả các thực tập sinh là ET, trong đó ET là thực tập sinh đã vượt qua bài test đầu vào và thảo mãn số điểm sau
+ET_IQ + ET_Gmath >= 20
+ET_IQ >= 8
+ET_Gmath >= 8
+ET_English >=18
+*/
+
+SELECT 
+    trainee_id, fullname as ET, et_iq, et_gmath, et_english
 FROM
     trainee
 WHERE
-    (et_iq + et_gmath) >= 18 AND et_iq >= 8
+    (et_iq + et_gmath) >= 20 AND et_iq >= 8
         AND et_gmath >= 8
-        AND et_english >= 16
-GROUP BY ;
+        AND et_english >= 18;
 
-/* ************* Q3 Viết lệnh để lấy ra thực tập sinh có tên dài nhất với các thông tin sau: tên, tuổi, 
+/* *********** Q5 xóa thực tập sinh có trainee_id = 3 *********** */
+
+Delete from trainee where trainee_id =3;
+select * from trainee;
+
+/* ************ Q6 thực tập sinh có trainee_id = 5 được chuyển sang lớp 2, hãy cập nhật thông tin vào database */
+
+update trainee
+set training_class = 'class2' where trainee_id = 5;
+select * from trainee;
