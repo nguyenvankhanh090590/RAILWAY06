@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS `account` (
     email				VARCHAR(200) UNIQUE KEY DEFAULT 'X',
     username			NVARCHAR(100) DEFAULT 'UNKNOWN',
     fullname			NVARCHAR(100) DEFAULT 'UNKNOWN',
-    department_id		SMALLINT UNSIGNED DEFAULT 9999,
+    department_id		SMALLINT UNSIGNED,
     position_id			TINYINT UNSIGNED,
     create_date			DATE,
-    FOREIGN KEY (department_id)	REFERENCES department (department_id) ON DELETE SET NULL,
+    FOREIGN KEY (department_id)	REFERENCES department (department_id),
     FOREIGN KEY (position_id) 	REFERENCES `position`(position_id) 
 );
 
@@ -197,7 +197,7 @@ VALUES
         ('Unknown7',	9,			1,				6,				'2018-4-14'),
         ('Unknown8',	10,			1,				10,				'2019-5-14'),
         ('Unknown9',	7,			2,				10,				'2017-2-14'),
-        ('Unknown10',	5,			2,				10,				'2020-1-14');
+        ('Unknown10',	5,			2,				10,				'2020-11-14');
 
 INSERT INTO
 answer(content, question_id, is_correct)
@@ -286,22 +286,23 @@ DELIMITER $$
 CREATE PROCEDURE pro_3()
 	BEGIN
 		SELECT t.type_id, t.type_name, COUNT(q.question_id) AS number_of_question
-        FROM type_question t LEFT JOIN question q ON t.type_id = q.type_id
-        WHERE MONTH(q.create_date) = MONTH(NOW())
+        FROM type_question t
+				LEFT JOIN question q ON t.type_id = q.type_id
+        WHERE MONTH(q.create_date) = MONTH(NOW()) AND YEAR(q.create_date)  = YEAR(NOW())
         GROUP BY q.type_id;
     END $$
 DELIMITER ;
 CALL pro_3;
+select* from question;
 
 -- ************ Q4 Tạo ra store để trả ra id của type question có nhiều câu hỏi nhất ************
 
 DROP PROCEDURE IF EXISTS pro_4;
 DELIMITER $$
-CREATE PROCEDURE pro_4()
+CREATE PROCEDURE pro_4(OUT type_of_question INT UNSIGNED)
 	BEGIN
-		SELECT type_id, COUNT(question_id)
-        FROM type_question
-			JOIN question USING(type_id)
+		SELECT type_id INTO type_of_question
+        FROM question			
 		GROUP BY type_id
         HAVING COUNT(question_id) = (SELECT
 									MAX(No_of_question)
@@ -309,10 +310,13 @@ CREATE PROCEDURE pro_4()
 									COUNT(question_id) AS No_of_question
 								FROM question
                                 GROUP BY type_id)
-                                AS No_question);
+                                AS No_question)
+		LIMIT 1;
 	END $$
 DELIMITER ;
-CALL pro_4();
+SET @type_of_question = 0;
+CALL pro_4(@type_of_question);
+SELECT @type_of_question;
 
 -- ************* Q5 Sử dụng store ở Q4 để tìm ra tên của type question ********
 
@@ -320,17 +324,13 @@ DROP PROCEDURE IF EXISTS pro_5;
 DELIMITER $$
 CREATE PROCEDURE pro_5()
 	BEGIN
-		SELECT type_name, COUNT(question_id)
+		DECLARE type_of_question SMALLINT UNSIGNED;
+		SET type_of_question = 0;
+        CALL pro_4(type_of_question);
+		SELECT type_of_question;
+        SELECT type_name
         FROM type_question
-			JOIN question USING(type_id)
-		GROUP BY type_id
-        HAVING COUNT(question_id) = (SELECT
-									MAX(No_of_question)
-								FROM (SELECT
-									COUNT(question_id) AS No_of_question
-								FROM question
-								GROUP BY type_id)
-								AS No_question);        
+        WHERE type_id = type_of_question;
 	END $$
 DELIMITER pro_5();
 CALL pro_5;
@@ -342,20 +342,40 @@ DROP PROCEDURE IF EXISTS pro_6;
 DELIMITER $$
 CREATE PROCEDURE pro_6(IN input_username_or_group_name NVARCHAR(100))
 	BEGIN
-		SELECT username AS name_of_group_or_user
+		SELECT username AS `name`, 'username' AS `type`
         FROM `account`
         WHERE username LIKE CONCAT('%', input_username_or_group_name , '%')
 			UNION
-        SELECT group_name 
+        SELECT group_name `name`, 'group' AS `type`
         FROM `group`
         WHERE group_name LIKE CONCAT ('%', input_username_or_group_name, '%');
 	END $$
 DELIMITER ;
 CALL pro_6('a');
 
-/* ********** Q7 viết một store cho phép người dùng nhận vào thông tin full name, email và 
+/* ********** Q7 viết một store cho phép người dùng nhập vào thông tin full name, email và 
 trong store sẽ tự động gán username sẽ giống email nhưng bỏ @...mail đi positionid sẽ có default là developer,
 department_id sẽ được cho vào một phòng chờ. Sau đó in kết quả tạo thành công ***** */
+
+DROP PROCEDURE IF EXISTS pro_7;
+DELIMITER $$
+CREATE PROCEDURE pro_7(IN enter_full_name NVARCHAR(100), IN enter_email VARCHAR(100))
+	BEGIN
+		DELETE FROM department
+        WHERE department_id = 9999;
+        INSERT INTO department	(department_id, 	department_name)
+        VALUE 					(9999, 				'Phòng chờ');
+		DELETE FROM `account`
+        WHERE email = enter_email;
+        INSERT INTO `account`	(email, 			username, 						fullname, 			department_id,	position_id,	create_date)
+        VALUE 					(enter_email, SUBSTRING_INDEX(enter_email,'@',1),	enter_full_name,	9999,			1,				NOW());
+        SELECT *
+        FROM `account`
+        WHERE email = enter_email;
+	END $$
+DELIMITER ;
+CALL testing_system_assignment_6.pro_7('LÊ VĂN LỘC', 'locheo1234@icloud.com');
+
 
 /* ********** Q8 Viết một store cho phép người dùng nhập vào Essay hoặc Multiple-Choice để thống kê câu hỏi 
 essay hoặc multiple-choice nào có content dài nhất ***** */
@@ -385,10 +405,10 @@ CALL pro_8('Multiple-Choice');
 
 DROP PROCEDURE IF EXISTS pro_9;
 DELIMITER $$
-CREATE PROCEDURE pro_9(IN nhap_ID_exam INT UNSIGNED)
+CREATE PROCEDURE pro_9(IN enter_ID_exam INT UNSIGNED)
 	BEGIN
 		DELETE FROM exam
-        WHERE exam_id = nhap_ID_exam;
+        WHERE exam_id = enter_ID_exam;
 	END $$
 DELIMITER ;
 
@@ -398,9 +418,39 @@ SELECT * FROM exam;
 /* ********* Q10 Tìm ra các exam được tạo từ 3 năm trước và xóa các exam đó đi (sử dụng store ở câu 9 để xóa).
 Sau đó in số lượng record đã remove từ các table liên quan trong khi removing ****** */
 
-SELECT exam_id
-FROM exam
-WHERE (YEAR(NOW()) - YEAR(create_date)) > 3;
+DROP PROCEDURE IF EXISTS pro_10_1;
+DELIMITER $$
+CREATE PROCEDURE pro_10_1()
+	BEGIN
+		DECLARE exam_number SMALLINT UNSIGNED;
+        DECLARE var1 SMALLINT UNSIGNED;
+        DECLARE var2 SMALLINT UNSIGNED;
+        SET exam_number = 0;
+        SET var1 = 0;
+        SET var2 = (SELECT
+					COUNT(exam_id)
+				FROM exam
+				WHERE (YEAR(NOW()) - YEAR(create_date)) >= 3);
+        REPEAT
+			SET exam_number = (SELECT
+							MAX(exam_id)
+						FROM exam
+						WHERE (YEAR(NOW()) - YEAR(create_date)) >= 3);
+			CALL pro_9(exam_number);
+            SET var1 = var1 + 1;
+        UNTIL var1 = var2 END REPEAT;
+	END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS pro_10;
+DELIMITER $$
+CREATE PROCEDURE pro_10()
+	BEGIN
+		SELECT 'exam' AS `table_name`, COUNT(exam_id) AS number_record_deleted FROM exam
+		WHERE (YEAR(NOW()) - YEAR(create_date)) >= 3; 
+        CALL pro_10_1();
+	END $$
+DELIMITER ;
 
 /* ******* Q11 viết store cho phép người dùng xóa phòng ban bằng cách người dùng nhập vào tên phòng ban và các
 account thuộc phòng ban đó sẽ được chuyển về phòng ban default là phòng ban chờ việc***** */
@@ -409,36 +459,113 @@ DROP PROCEDURE IF EXISTS pro_11 ;
 DELIMITER $$
 CREATE PROCEDURE pro_11(IN input_department_name NVARCHAR(100))
 	BEGIN
-		SET FOREIGN_KEY_CHECKS = 1;
+		WITH CTE1 AS (
+			SELECT
+				account_id 
+			FROM `account`
+					JOIN department USING (department_id)
+			WHERE department_name = input_department_name)			
+        UPDATE `account`
+        SET department_id = 9999
+        WHERE account_id = ANY (SELECT
+							account_id
+						FROM CTE1);
+		DELETE FROM department
+        WHERE department_name = input_department_name;
         DELETE FROM department
         WHERE department_id = 9999;
-        INSERT INTO department(department_id, department_name) VALUE (9999, 'Chờ việc');
-        DELETE FROM department
-        WHERE department_name = input_department_name;
-        
-        	END $$
+        INSERT INTO
+			department	(department_id, department_name)
+		VALUE 			(9999, 			'Phòng chờ');
+		SELECT *
+        FROM `account`;
+	END $$
 DELIMITER ;
-CALL pro_11('Thư ký');
-UPDATE `account`
-SET department_id = 9999
-WHERE department_id = NULL;
-SELECT * FROM `account`;
-select * from department;
+
+
+
 
 /* ************* Q12 viết store để in ra mỗi tháng có bao nhiêu câu hỏi được tạo ra trong năm nay *********** */
 
+DROP VIEW IF EXISTS view_12;
+CREATE VIEW view_12 As
+	SELECT EachMonthInYear.`MONTH`
+	FROM
+	(
+				SELECT 1 AS `MONTH`
+				UNION SELECT 2 AS `MONTH`
+				UNION SELECT 3 AS `MONTH`
+				UNION SELECT 4 AS `MONTH`
+				UNION SELECT 5 AS `MONTH`
+				UNION SELECT 6 AS `MONTH`
+				UNION SELECT 7 AS `MONTH`
+				UNION SELECT 8 AS `MONTH`
+				UNION SELECT 9 AS `MONTH`
+				UNION SELECT 10 AS `MONTH`
+				UNION SELECT 11 AS `MONTH`
+				UNION SELECT 12 AS `MONTH`
+	) AS EachMonthInYear;
+    
 DROP PROCEDURE IF EXISTS pro_12;
 DELIMITER $$
 CREATE PROCEDURE pro_12()
-	BEGIN
-		SELECT MONTH(create_date),count(question_id)
-        FROM question
-        WHERE YEAR(create_date) = YEAR(NOW())
-        GROUP BY MONTH(create_date)
-        ORDER BY MONTH(create_date);
+	BEGIN		
+			WITH CTE2 AS(
+				WITH CTE1 AS (
+				SELECT MONTH(create_date) as month_created, count(question_id) AS number_question
+				FROM question
+				WHERE YEAR(create_date) = YEAR(NOW())
+				GROUP BY month_created
+				ORDER BY month_created)
+            
+				SELECT v12.`MONTH`, CTE1.number_question
+				FROM view_12 v12
+						JOIN CTE1 ON v12.`MONTH` = CTE1.month_created
+					UNION
+				SELECT v12.`MONTH`, 0 AS number_question
+                FROM view_12 v12
+						LEFT JOIN CTE1 ON v12.`MONTH` = CTE1.month_created
+				WHERE CTE1.month_created IS NULL)
+			SELECT * FROM CTE2
+            ORDER BY `MONTH`;
 	END $$
 DELIMITER ;
 CALL pro_12;
 
 /* ************ Q13 Viết store để in ra mỗi tháng có bao nhiêu câu hỏi được tạo ra trong 6 tháng gần đây nhất 
 (Nếu tháng nào không có sẽ in ra là không có câu hỏi nào trong tháng)******* */
+
+DROP PROCEDURE IF EXISTS pro_13;
+DELIMITER $$
+CREATE PROCEDURE pro_13()
+	BEGIN
+		WITH CTE3 AS (
+			WITH CTE1 AS (
+				SELECT SixMonthInYear.`month`
+				FROM
+					(
+					SELECT month(now()) AS `month`
+					UNION SELECT month(now())-1 AS `month`
+					UNION SELECT month(now())-2 AS `month`
+					UNION SELECT month(now())-3 AS `month`
+					UNION SELECT month(now())-4 AS `month`
+					UNION SELECT month(now())-5 AS `month`
+					) AS SixMonthInYear),
+			CTE2 AS (
+					SELECT MONTH(create_date) as month_created, count(question_id) AS number_question, MONTH(now())-MONTH(create_date)
+					FROM question
+					WHERE  (MONTH(now())- MONTH(create_date)) <= 5
+					GROUP BY month_created
+					ORDER BY month_created)
+			SELECT CTE1.`month`, CTE2.number_question
+			FROM CTE1 JOIN CTE2 ON CTE1.`month` = CTE2.month_created
+				UNION
+			SELECT CTE1.`month`, N'Không có câu hỏi nào trong tháng' As number_question
+			FROM CTE1 LEFT JOIN CTE2 ON CTE1.`month` = CTE2.month_created
+			WHERE CTE2.month_created IS NULL)
+		SELECT *
+		FROM CTE3
+		ORDER BY CTE3.`month` DESC;
+	END $$
+DELIMITER ;
+CALL pro_13;

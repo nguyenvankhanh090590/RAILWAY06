@@ -257,13 +257,13 @@ WHERE
 
 CREATE OR REPLACE VIEW view_2 AS
 SELECT 
-    account_id, fullname, email, GROUP_CONCAT(group_id)
+    account_id, fullname, email, GROUP_CONCAT(group_id) AS number_of_group
 FROM
     `account`
         JOIN
     group_account USING (account_id)
 GROUP BY account_id
-HAVING COUNT(department_id) = (SELECT 
+HAVING COUNT(group_id) = (SELECT 
         MAX(number_of_group)
     FROM
         (SELECT 
@@ -279,7 +279,7 @@ VALUES 					(N'Thế quái nào không xóa được',
 									1,				3,			5,				'2020-08-11');
 CREATE OR REPLACE VIEW view_3 AS
     SELECT 
-        *, length(content)
+        *, LENGTH(content)
     FROM
         question
     WHERE
