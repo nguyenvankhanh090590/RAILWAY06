@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS `account` (
     department_id		TINYINT UNSIGNED,
     position_id			TINYINT UNSIGNED,
     create_date			DATE,
-    FOREIGN KEY (department_id)	REFERENCES department (department_id) ON DELETE CASCADE,
-    FOREIGN KEY (position_id) 	REFERENCES `position`(position_id) ON DELETE CASCADE
+    FOREIGN KEY (department_id)	REFERENCES department (department_id),
+    FOREIGN KEY (position_id) 	REFERENCES `position`(position_id)
 );
 
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `group` (
     group_name			NVARCHAR(200),
     creator_id			SMALLINT UNSIGNED,
     create_date			DATE,
-    FOREIGN KEY (creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE
+    FOREIGN KEY (creator_id) REFERENCES `account`(account_id)
 );
 
 DROP TABLE IF EXISTS group_account;
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS group_account (
     account_id			SMALLINT UNSIGNED NOT NULL,
     join_date			DATE,
     PRIMARY KEY (group_id, account_id),
-    FOREIGN KEY (group_id)	REFERENCES `group`(group_id) ON DELETE CASCADE,
-    FOREIGN KEY (account_id) REFERENCES `account`(account_id) ON DELETE CASCADE
+    FOREIGN KEY (group_id)	REFERENCES `group`(group_id) ,
+    FOREIGN KEY (account_id) REFERENCES `account`(account_id) 
 );
 
 
@@ -68,9 +68,9 @@ CREATE TABLE IF NOT EXISTS question	(
     type_id				TINYINT UNSIGNED,
     creator_id			SMALLINT UNSIGNED,
     create_date			DATE,
-    FOREIGN KEY (category_id) REFERENCES category_question(category_id) ON DELETE CASCADE,
-    FOREIGN KEY (type_id) REFERENCES type_question(type_id) ON DELETE CASCADE,
-	FOREIGN KEY (creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE
+    FOREIGN KEY (category_id) REFERENCES category_question(category_id) ,
+    FOREIGN KEY (type_id) REFERENCES type_question(type_id) ,
+	FOREIGN KEY (creator_id) REFERENCES `account`(account_id) 
 );
 
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS answer (
     content				TEXT,
     question_id			SMALLINT UNSIGNED,
     is_correct			ENUM('True','False') DEFAULT 'TRUE',
-    FOREIGN KEY (question_id) REFERENCES question(question_id) ON DELETE CASCADE
+    FOREIGN KEY (question_id) REFERENCES question(question_id) 
 );
 
 DROP TABLE IF EXISTS exam;
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS exam	(
     duration			TINYINT	UNSIGNED,
     creator_id			SMALLINT UNSIGNED,
     create_date			DATE,
-    FOREIGN KEY (creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE
+    FOREIGN KEY (creator_id) REFERENCES `account`(account_id)
 );
 
 DROP TABLE IF EXISTS exam_question;
@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS exam_question (
 	question_id			SMALLINT 		UNSIGNED,
     exam_id				SMALLINT 		UNSIGNED,
     PRIMARY KEY (question_id, exam_id),
-    FOREIGN KEY (question_id) 			REFERENCES question(question_id) ON DELETE CASCADE,
-    FOREIGN KEY (exam_id) 				REFERENCES exam(exam_id) ON DELETE CASCADE
+    FOREIGN KEY (question_id) 			REFERENCES question(question_id) ,
+    FOREIGN KEY (exam_id) 				REFERENCES exam(exam_id) 
 );
 
 

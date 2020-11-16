@@ -1,9 +1,6 @@
-
--- ************ a, Tạo table với các ràng buộc và kiểu dữ liệu. Sau đó thêm ít nhất 3 bản ghi vào mỗi table trên
-
-DROP DATABASE IF EXISTS extra_6;
-CREATE DATABASE extra_6;
-USE extra_6;
+DROP DATABASE IF EXISTS extra_7;
+CREATE DATABASE extra_7;
+USE extra_7;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS employee;
 CREATE TABLE employee (
@@ -108,120 +105,76 @@ VALUES				  (1,			1,		   '2019-07-13',   'Work 1.1.1',		  'completed'),
                       (5,			16,		   NULL,		   'Work 5.16.2',		  'progressing'),
                       (9,			16,		   NULL,		   'Work 5.16.3',		  'progressing');
 
--- *********** b, viết stored procedure (không có parameter) để remove tất cả thông tin project
--- đã hoàn thành sau 3 tháng từ hiện tại. IN số lượng record đã remove từ các table liên quan 
--- trong khi removing (dùng lệnh print)
+DROP TABLE IF EXISTS trainee;
+CREATE TABLE IF NOT EXISTS trainee (
+	trainee_id			SMALLINT		UNSIGNED		PRIMARY KEY		AUTO_INCREMENT,
+    fullname			NVARCHAR(100),
+    birth_date			DATE,
+    gender				ENUM('male','female','unknown')	DEFAULT 'unknown',
+    et_iq				TINYINT CHECK(et_iq BETWEEN 0 AND 20),
+    et_gmath			TINYINT CHECK(et_gmath BETWEEN 0 AND 20),
+    et_english			TINYINT CHECK(et_english BETWEEN 0 AND 50),
+    training_class		NVARCHAR(50),
+    evaluation_notes	TEXT                        
+	);
+    
+ALTER TABLE trainee
+ADD COLUMN 	VTI_account VARCHAR(100)	UNIQUE KEY		NOT NULL
+AFTER		gender;
 
-DROP TRIGGER IF EXISTS trig_1;
+
+/* ********Q1 thêm ít nhất 10 bản ghi vào table ******* */
+INSERT INTO 
+	trainee(fullname, 				birth_date, gender, 	VTI_account, 		et_iq, 		et_gmath, 	et_english, training_class, 	evaluation_notes)
+VALUES
+			('Nguyễn Văn An ',		'1995-01-01','male',	'A1',				'2',		'16',		'15',		'class11',				'note1'),
+            ('Nguyễn Bá Bình',		'1996-02-14','female',	'B1',				'13',		'1',		'17',		'class11',				'note2'),
+            ('Nguyễn Văn Cờ',		'1990-04-21','male',	'C1',				'20',		'7',		'23',		'class11',				NULL),
+            ('Lê Dinh',				'1997-10-31','male',	'D1',				'6',		'18',		'14',		'class12',				'note4'),
+            ('Doãn Enroll',			'2001-12-05','male',	'E1',				'7',		'17',		'13',		'class12',				'note5'),
+            ('Nguyễn Văn Female',	'2000-09-20','male',	'F1',				'14',		'16',		'30',		'class11',				'note6'),
+            ('Nguyễn Văn Giờ',		'1996-04-19','female',	'G1',				'12',		'20',		'9',		'class12',				'note7'),
+            ('Đinh Văn Hết',		'1999-07-21','female',	'H1',				'16',		'20',		'31',		'class12',				'note8'),
+            ('Ninh Văn Iinh',		'1997-08-24','female',	'I1',				'17',		'5',		'27',		'class12',				NULL),
+            ('Nguyễn Văn Kim Lương','1999-05-01','female',	'K1',				'8',		'11',		'33',		'class11',				'note10'),
+            ('Trần Văn Lan',		'2002-06-27','male',	'L1',				'11',		'19',		'45',		'class13',				'note11'),
+            ('Mạc Minh Hiếu',		'2001-11-20','unknown',	'M1',				'20',		'19',		'39',		'class12',				'note12'),
+            ('Lung Thị Linh',		'1995-01-15','male',	'N1',				'9',		'13',		'10',		'class13',				'note13'),
+            ('Nguyễn Vê',			'2003-04-17','female',	'O1',				'9',		'10',		'34',		'class12',				NULL),
+            ('Lê Ánh',				'2002-02-11','unknown',	'P1',				'10',		'17',		'45',		'class13',				NULL);
+            
+            
+/* ****** EX1 Tiếp tục với database của bài extra 6
+Viết trigger để tránh trường hợp người dùng nhập thông tin module project không hợp lệ
+(project_modules.project_module_date < project.project_start_date,
+project_modules.project_modules_completed_on > project.project_completed_on)
+*/
+
+DROP TRIGGER IF EXISTS trig_ex1;
 DELIMITER $$
-CREATE TRIGGER trig_1
-BEFORE DELETE ON project
+CREATE TRIGGER trig_ex1
+BEFORE INSERT ON project_modules
 FOR EACH ROW
 	BEGIN
-		IF (SELECT
-				project_completed_on
-			FROM project
-                 WHERE project_id = OLD.project_id) < (SELECT NOW() - INTERVAL 3 MONTH) THEN
-		DELETE FROM project_modules
-		WHERE project_id = OLD.project_id;
-        DELETE FROM work_done
-        WHERE module_id = ANY(SELECT
-								module_id
-							FROM project_modules
-                                 WHERE project_id = OLD.project_id);
-		END IF;
-	END $$
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS pro_b;
-DELIMITER $$
-CREATE PROCEDURE pro_b()
-	BEGIN
-		
-        DECLARE x1 SMALLINT UNSIGNED;
-        DECLARE x2 SMALLINT UNSIGNED;
-        DECLARE x3 SMALLINT UNSIGNED;
-        SET x1 = 0;
-        SET x2 = 0;
-        SET x3 = 0;       
-		            
-		SET x1 = (SELECT
-				COUNT(project_id)
-			FROM project
-            WHERE project_completed_on < (SELECT NOW() - INTERVAL 3 MONTH));
-		SET x2 = (SELECT
-				COUNT(module_id)
-			FROM project_modules
-            WHERE project_id = ANY (SELECT 
-									project_id
-								FROM project
-								WHERE project_completed_on < (SELECT NOW() - INTERVAL 3 MONTH)));
-		SET x3 = (SELECT
-				COUNT(module_id)
-			FROM work_done
-            WHERE module_id = ANY (SELECT
-								module_id
-							FROM project_modules
-                            WHERE project_id = ANY (SELECT
-													project_id
+		IF NEW.project_module_date < 	(SELECT project_start_date
+										FROM project
+                                        WHERE project_id = NEW.project_id) 
+                                        THEN
+			SIGNAL SQLSTATE '10015'
+			SET MESSAGE_TEXT = 'Khai báo lỗi: Ngày dự kiến hoàn thành module sớm hơn ngày bắt đầu của dự án';
+        ELSEIF NEW.project_module_complete_on > (SELECT project_completed_on
 												FROM project
-												WHERE project_completed_on < (SELECT NOW() - INTERVAL 3 MONTH))));
-		
-        DELETE FROM project
-        WHERE project_completed_on < (SELECT NOW() - INTERVAL 3 MONTH);
-        
-        SELECT 
-			t1.record_deleted, t1.from_table
-		FROM (
-				SELECT x1 AS record_deleted, 'project' AS from_table
-					UNION
-				SELECT x2 AS record_deleted, 'project_modules' AS from_table
-					UNION
-				SELECT x3 AS record_deleted, 'work_done' AS from_table) AS t1;
-        
-	END $$
-DELIMITER ;
-
--- ********** c, viết stored procedure (có parameter) để in ra các module đang được thực hiện
-
-DROP PROCEDURE IF EXISTS pro_c;
-DELIMITER $$
-CREATE PROCEDURE pro_c(IN module_status_1_for_completed_0_for_progressing BIT)
-	BEGIN
-		IF module_status_1_for_completed_0_for_progressing = 0 THEN
-        SELECT * FROM project_modules WHERE project_module_complete_on IS NULL;
-        ELSEIF module_status_1_for_completed_0_for_progressing = 1 THEN
-        SELECT * FROM project_modules WHERE project_module_complete_on IS NOT NULL;
+                                                WHERE project_id = NEW.project_id
+														AND project_id IS NOT NULL) THEN
+			SIGNAL SQLSTATE '10016'
+			SET MESSAGE_TEXT = 'Khai báo lỗi: Ngày hoàn thành module trễ hơn ngày hoàn thành của dự án';
         END IF;
-	END $$
+    END $$
 DELIMITER ;
 
--- ********** d, viết hàm (có parameter) trả về thông tin một nhân viên đã tham gia làm mặc dù không ai
--- giao việc cho nhân viên đó
+-- ************ CHECK
+INSERT INTO project_modules (project_id,	employee_id, project_module_date, project_module_complete_on, project_module_description)
+VALUES						(2,				4,			 '2020-10-31',		  '2020-11-29',				  'CHECK');
+SELECT * FROM project_modules;
+SELECT * FROM project;
 
-SET GLOBAL LOG_BIN_TRUST_FUNCTION_CREATORS = 1;
-DROP FUNCTION IF EXISTS id_emloyee;
-DELIMITER $$
-CREATE FUNCTION id_emloyee(work_not_under_sup BIT) RETURNS NVARCHAR(200)
-	BEGIN
-		DECLARE id_employee NVARCHAR(200);
-        IF work_not_under_sup = 1 THEN
-        WITH CTE1 AS (
-			SELECT DISTINCT employee_id, '1' AS sample
-			FROM employee
-					JOIN work_done USING (employee_id)
-			WHERE supervisor_id IS NULL
-			GROUP BY employee_id)
-		SELECT GROUP_CONCAT(employee_id) INTO id_employee
-        FROM CTE1
-        GROUP BY sample;
-        RETURN id_employee;
-        ELSE
-        SET id_employee = 'func_1 is turned off';
-        RETURN id_employee;
-        END IF;
-	END $$
-DELIMITER ;
-
-
- 

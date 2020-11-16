@@ -512,7 +512,7 @@ CREATE PROCEDURE pro_12()
 	BEGIN		
 			WITH CTE2 AS(
 				WITH CTE1 AS (
-				SELECT MONTH(create_date) as month_created, count(question_id) AS number_question
+				SELECT MONTH(create_date) as month_created, COUNT(question_id) AS number_question
 				FROM question
 				WHERE YEAR(create_date) = YEAR(NOW())
 				GROUP BY month_created
@@ -544,17 +544,17 @@ CREATE PROCEDURE pro_13()
 				SELECT SixMonthInYear.`month`
 				FROM
 					(
-					SELECT month(now()) AS `month`
-					UNION SELECT month(now())-1 AS `month`
-					UNION SELECT month(now())-2 AS `month`
-					UNION SELECT month(now())-3 AS `month`
-					UNION SELECT month(now())-4 AS `month`
-					UNION SELECT month(now())-5 AS `month`
+					SELECT month(NOW()) AS `month`
+					UNION SELECT month(NOW())-1 AS `month`
+					UNION SELECT month(NOW())-2 AS `month`
+					UNION SELECT month(NOW())-3 AS `month`
+					UNION SELECT month(NOW())-4 AS `month`
+					UNION SELECT month(NOW())-5 AS `month`
 					) AS SixMonthInYear),
 			CTE2 AS (
-					SELECT MONTH(create_date) as month_created, count(question_id) AS number_question, MONTH(now())-MONTH(create_date)
+					SELECT MONTH(create_date) as month_created, COUNT(question_id) AS number_question, MONTH(NOW())-MONTH(create_date)
 					FROM question
-					WHERE  (MONTH(now())- MONTH(create_date)) <= 5
+					WHERE  (MONTH(NOW())- MONTH(create_date)) <= 5
 					GROUP BY month_created
 					ORDER BY month_created)
 			SELECT CTE1.`month`, CTE2.number_question
