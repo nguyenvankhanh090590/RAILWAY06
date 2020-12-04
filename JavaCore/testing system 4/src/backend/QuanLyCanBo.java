@@ -2,7 +2,8 @@ package backend;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import enity.Q1.Ex5.*;
+
+import entity.Q1.Ex5.*;
 
 public class QuanLyCanBo {
 	ArrayList<CanBo> danhsachcanbo = new ArrayList<CanBo>();

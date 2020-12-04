@@ -16,7 +16,7 @@ public class QuanLyTaiLieu {
 		System.out.println("Nhập tên NXB:");
 		sc.nextLine();
 		tl.setNXB(sc.nextLine());
-		;
+		
 
 		System.out.println("Nhập số phát hành:");
 		tl.setNumPub(sc.nextInt());
