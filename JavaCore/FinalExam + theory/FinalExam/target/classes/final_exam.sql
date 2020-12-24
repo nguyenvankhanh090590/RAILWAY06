@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS final_exam;
 CREATE DATABASE IF NOT EXISTS final_exam;
 USE final_exam;
-SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
 	user_id		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -50,5 +50,3 @@ VALUES
     (4, 'Nguyễn Văn D', 'VanD@gmail.com', 'D123456', 'Employee', 0, 2, 'Java'),
     (5, 'Nguyễn Văn E', 'VanE@gmail.com', 'E123456', 'Employee', 0, 2, 'SQL');
     
-SELECT * FROM `user` ORDER BY user_id;
--- DELETE FROM `user` WHERE user_id = 1;
