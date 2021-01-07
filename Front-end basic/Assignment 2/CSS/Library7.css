@@ -1,0 +1,59 @@
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    grid-area: header;
+    background-color: red;
+    height: 110px;
+    padding: 30px;
+    text-align: center;
+}
+
+.navi {
+    grid-area: navi;
+    background-color: green;
+    height: 40px;
+    padding: 30px;
+}
+
+
+/* The grid container */
+
+.grid-container {
+    display: grid;
+    grid-template-areas: 'header header header header header header' 'navi navi navi navi navi navi' 'left left left left aside aside' 'right right right right aside aside' 'footer footer footer footer footer footer';
+    /* grid-column-gap: 10px; - if you want gap between the columns */
+}
+
+.left {
+    grid-area: left;
+    padding: 10px;
+    height: 200px;
+    background-color: blue;
+}
+
+.right {
+    grid-area: right;
+    padding: 10px;
+    height: 200px;
+    background-color: black;
+}
+
+.aside {
+    grid-area: aside;
+    padding: 10px;
+    height: 400px;
+    background-color: gray;
+}
+
+
+/* Style the footer */
+
+.footer {
+    grid-area: footer;
+    background-color: orange;
+    height: 110px;
+    padding: 10px;
+    text-align: center;
+}

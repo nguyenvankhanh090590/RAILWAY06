@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Position</title>
+    <style>
+        .container {
+            border: 2px solid blue;
+            width: 400px;
+            height: 400px;
+            position: relative;
+            margin: 100px auto;
+        }
+        
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="1">
+        <div class="box" style="text-align: center;position: absolute; top: 150px; right: 150px;">
+            Xbox
+        </div>
+    </div>
+    <br>
+    <div class="container" id="2">
+        <div class="box" style="text-align: center;position: absolute; bottom: 0px; right: 0px;">
+            Xbox
+        </div>
+    </div>
+    <br>
+    <div class="container" id="3">
+        <div class="box" style="text-align: center;position: absolute; top: -102px; right: 150px;">
+            Xbox
+        </div>
+    </div>
+</body>
+
+</html>

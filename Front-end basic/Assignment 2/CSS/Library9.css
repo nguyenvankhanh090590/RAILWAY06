@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+.section1 {
+    text-align: justify;
+    padding: 0px;
+    width: 300px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.buttonFloat {
+    float: right;
+}
+
+.button {
+    border-radius: 4px;
+    background-color: royalblue;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: white;
+    border: 2px solid royalblue;
+    color: black;
+}

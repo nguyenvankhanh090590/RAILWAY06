@@ -1,0 +1,56 @@
+.TextCenter {
+    text-align: center;
+}
+
+.TextInLine {
+    display: inline;
+}
+
+
+/* Create four equal columns that floats next to each other */
+
+.column1 {
+    float: left;
+    width: 35%;
+    padding: 10px;
+}
+
+.column2 {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+table.tb1,
+th.th1,
+td.td1 {
+    border: 3px solid violet;
+}
+
+td.td2 {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+td.td3 {
+    border: 1px solid black;
+    padding: 5px;
+    width: 40%;
+}
+
+table.tb2 {
+    border: 1px solid black;
+}
+
+.blueh {
+    color: blue;
+}

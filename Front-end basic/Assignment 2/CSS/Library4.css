@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    float: left;
+    width: 100%;
+    height: 160px;
+    padding: 15px;
+}
+
+.menuColm {
+    float: left;
+    width: 30%;
+    height: 400px;
+    padding: 15px;
+}
+
+.mainColm {
+    float: left;
+    width: 70%;
+    height: 400px;
+    padding: 15px;
+}
+
+.footer {
+    float: left;
+    width: 100%;
+    height: 140px;
+    text-align: center;
+    padding: 15px;
+}
+
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}

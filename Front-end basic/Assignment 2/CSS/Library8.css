@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+    margin: 15px;
+}
+
+.header {
+    padding: 30px;
+    text-align: center;
+    border: 3px solid pink;
+    width: 900px;
+}
+
+
+/* Container for flexboxes */
+
+.row {
+    display: -webkit-flex;
+    display: flex;
+    width: 900px;
+}
+
+.slidebar {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 10px;
+    height: 500px;
+}
+
+.content {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 4;
+    padding: 10px;
+    height: 500px;
+    border: 3px solid red;
+    text-align: center;
+}
+
+.footer {
+    padding: 10px;
+    text-align: center;
+    border: 3px solid springgreen;
+    width: 900px;
+}

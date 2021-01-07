@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    grid-area: header;
+    background-color: yellow;
+    height: 160px;
+    padding: 30px;
+    text-align: center;
+}
+
+
+/* The grid container */
+
+.grid-container {
+    display: grid;
+    grid-template-areas: 'header header header header header header' 'left left right right right right' 'footer footer footer footer footer footer';
+    /* grid-column-gap: 10px; - if you want gap between the columns */
+}
+
+.left {
+    padding: 10px;
+    height: 400px;
+    background-color: red;
+}
+
+.right {
+    padding: 10px;
+    height: 400px;
+    background-color: gray;
+}
+
+
+/* Style the left column */
+
+.left {
+    grid-area: left;
+}
+
+
+/* Style the right column */
+
+.right {
+    grid-area: right;
+}
+
+
+/* Style the footer */
+
+.footer {
+    grid-area: footer;
+    background-color: black;
+    height: 110px;
+    padding: 10px;
+    text-align: center;
+}

@@ -1,0 +1,25 @@
+    .column1 {
+        float: left;
+        width: 20%;
+    }
+    
+    .column2 {
+        float: left;
+        width: 59%;
+    }
+    /* Clear floats after the columns */
+    
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    
+    @media (max-width: 1000px) {
+        .column2 {
+            width: 99%;
+        }
+        .column1 {
+            width: 0%;
+        }
+    }
