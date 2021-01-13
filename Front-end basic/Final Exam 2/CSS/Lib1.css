@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    float: left;
+    width: 100%;
+    height: 100px;
+    padding: 0px;
+}
+
+.leftMenu {
+    float: left;
+    width: 10%;
+    height: 540px;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.199);
+}
+
+.content {
+    float: left;
+    width: 90%;
+    height: 540px;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.199);
+}
+
+.footer {
+    float: left;
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.199);
+}
+
+.main ::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.td_header {
+    float: left;
+    padding: 8px 0px;
+    text-align: center;
+    width: 10%;
+    height: 100px;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.199);
+}
+
+.td_navi {
+    float: left;
+    width: 90%;
+    height: 100px;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.199);
+}
+
+.icon_header {
+    width: 11.11%;
+    height: 100px;
+}
+
+.border_icon_header {
+    width: fit-content;
+    box-sizing: content-box;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 19px 24%;
+    background-color: rgba(128, 128, 128, 0.199);
+}
+
+.border_icon_header:hover {
+    background-color: rgba(128, 128, 128, 0.418);
+}
+
+.icon_leftmenu {
+    float: left;
+    width: 100%;
+    height: 90px;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+.icon_leftmenu:hover {
+    background-color: rgba(128, 128, 128, 0.418);
+}

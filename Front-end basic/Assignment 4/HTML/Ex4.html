@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <title>JQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+
+</head>
+
+<body>
+    <div>
+        <p><u>Ex1 Câu 1: Ẩn hiện</u></p>
+        <p id="p1">If you click on thẻ "Hide" button, I will disappear.</p>
+        <button id="button1_1">Hide</button> <span> </span><button id="button1_2">Show</button>
+        <script>
+            $("#button1_1").click(function() {
+                $("#p1").hide();
+            });
+            $("#button1_2").click(function() {
+                $("#p1").show();
+            });
+        </script>
+        <br>
+        <p><u>Ex1 Câu 2: Ẩn</u></p>
+        <h3>This is a heading</h3>
+        <p class="cl2">This is a paragraph.</p>
+        <p class="cl2">This is another paragraph.</p>
+        <button id="button2">Click me to hide paragraph</button>
+        <script>
+            $("#button2").click(function() {
+                $("p.cl2").hide();
+            });
+        </script>
+        <br>
+        <p><u>Ex1 Câu 3: doubleClick để ẩn</u></p>
+        <p class="cl3">If you double-click on me, I will disappear.</p>
+        <p class="cl3">Click me away!</p>
+        <p class="cl3">Click me too!</p>
+        <script>
+            $("p.cl3").click(function() {
+                $(this).hide();
+            });
+        </script>
+        <br>
+        <p>Ex1 Câu 5: Mouse enter - leave</p>
+        <p id="p5" style="width: fit-content;">Di chuột vô dòng này bạn êi</p>
+        <script>
+            $("#p5").mouseenter(function() {
+                alert("Bạn vừa di chuột vào dòng này!");
+            });
+            $("#p5").mouseleave(function() {
+                alert("Goodbye ! My Love");
+            });
+        </script>
+        <br>
+        <p>Ex1 Câu 6: Yêu đương</p>
+        <p id="p6">Yêu không</p>
+        <script>
+            $("#p6").click(function() {
+                alert("Bố mẹ còn lưng ra nuôi cho ăn học, yêu với đương cái giề?");
+            });
+        </script>
+        <br>
+        <p>Ex1 Câu 7: Đổi màu background</p>
+        <p id="p7" style="width: fit-content;">Click or move the mouse pointer over this paragraph.</p>
+        <script>
+            $("#p7").click(function() {
+                $(this).css("background-color", "gray");
+            });
+            $("#p7").mouseover(function() {
+                $(this).css("background-color", "yellow");
+            });
+
+            $("#p7").mouseout(function() {
+                $(this).css("background-color", "lightgray");
+            });
+        </script>
+        <br>
+        <p>Ex2 Câu1: FadeIn():</p>
+        <p>Ba hình hiện ra với tốc độ khác nhau khi bấm vào click</p>
+        <button id="button2_1">Show</button>
+        <br>
+        <div id="div1_1" style="width: 150px; height: 150px;background-color: red; margin: 15px 20px;"></div>
+        <div id="div1_2" style="width: 150px; height: 150px;background-color: green; margin: 15px 20px;"></div>
+        <div id="div1_3" style="width: 150px; height: 150px;background-color: violet; margin: 15px 20px;"></div>
+        <script>
+            $("#div1_1,#div1_2,#div1_3").hide();
+            $("#button2_1").click(function() {
+                $("#div1_1").fadeIn();
+                $("#div1_2").fadeIn("slow");
+                $("#div1_3").fadeIn(3000);
+            });
+        </script>
+        <br>
+        <p>Ex2 Câu 2: slideDown</p>
+        <div style="text-align: center;">
+            <table style="width: 50%; border-collapse: collapse; background-color: yellowgreen;" align="center">
+                <tr>
+                    <td style="text-align: center; border: 2px solid lightgray; "><span id="span1_1">Click vào đây để học kiếm tiền</span></td>
+                </tr>
+                <tr>
+                    <td id="td2_2" style="text-align: center; border: 2px solid lightgray; ">
+                        <br>
+                        <p>
+                            Ra xã hội làm ăn bươn trải, liều thì ăn nhiều, không nhiều thì ăn ít. Muốn thành công phải trải qua đắng cay ngọt bùi. Làm ăn muốn kiếm được tiền thì phải chấp nhận mạo hiểm. Nguy hiểm một tí nhưng trong tầm kiểm soát. Sau này chỉ có làm, chịu khó, cần
+                            cù thì bù siêng năng, chỉ có làm thì mới có ăn, những cái loại không làm mà đòi có ăn thì chỉ có ăn back-end thôi :V
+                        </p>
+                        <br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <script>
+            $("#td2_2").hide();
+            var n = 0;
+            $("#span1_1").click(function() {
+                if (n == 0) {
+                    $("#td2_2").slideDown();
+                    n = 1;
+                }
+            });
+
+            $("#span1_1").dblclick(function() {
+                if (n == 1) {
+                    $("#td2_2").slideUp();
+                    n = 0;
+                }
+            });
+        </script>
+        <br>
+        <p>Ex2 Q4: blink</p>
+        <button id="button2_4">Start Animation</button>
+        <div style="width: 100px; height: 100px; background-color: lightgreen;position: relative;" id="div2_4"></div>
+        <script>
+            $("#button2_4").click(function() {
+                $("#div2_4").animate({
+                    left: "45%",
+                    opacity: "50%",
+                    width: "150px",
+                    height: "150px",
+                });
+            });
+        </script>
+        <br>
+        <p>Ex2 Q6: Tăng kích thước ảnh</p>
+        <button id="button2_6">Big</button>
+        <br>
+        <br>
+        <img src="../Images/huan-hoa-hong.jpg" alt="Huấn rose" width="300px" id="img2_6">
+        <script>
+            var i = 439 / 600;
+            var scale = 1;
+            $("#button2_6").click(function() {
+                scale = scale + 0.5;
+                var wide = 300 * scale;
+                wide = wide + "px";
+
+                var hight = parseInt(300 * i * scale);
+                hight = hight + "px";
+                $("#img2_6").animate({
+                    width: wide,
+                    height: hight,
+                });
+            });
+        </script>
+        <br>
+        <p>Ex2 Q7: slideToggle</p>
+        <button id="button2_7">Toggle paragraph</button>
+        <p id="p2_7"> By default, all HTML elements have a static position and cannot moved. To manipulate the position, remember to first set the CSS position property of the element to relative, fixed or absolute!</p>
+        <script>
+            $("#button2_7").click(function() {
+                $("#p2_7").slideToggle();
+            });
+        </script>
+        <br>
+        <p>Ex2 Q8: rút tiền</p>
+        <button id="button2_8">STOP</button>
+        <table style="width: 50%; background-color: lightslategray; color: white; border-collapse: collapse;" align="center">
+            <tr>
+                <td style="border: 2px solid red; padding: 10px; text-align: center;" id="td2_7_1">Click vào để rút tiền</td>
+            </tr>
+            <tr>
+                <td style="border: 2px solid red; padding: 10px; text-align: center;" id="td2_7_2"></td>
+            </tr>
+            <script>
+                $("#td2_7_2").hide();
+                $("#td2_7_1").click(function() {
+                    $("#td2_7_2").text("Đang rút tiền");
+                    $("#td2_7_2").slideDown();
+                });
+                $("#button2_8").click(function() {
+                    $("#td2_7_2").text("Đã dừng rút rút tiền");
+                });
+            </script>
+        </table>
+        <br>
+        <p>Ex2 Q9: Chương trình "Chia tay không?"</p>
+        <p>Chia tay không?</p>
+        <button id="button2_9">Divide hands</button>
+        <script>
+            $("#button2_9").click(function() {
+                confirm("Chia tay rồi không thể quay lại được, bạn chắc chưa?");
+            });
+        </script>
+        <br>
+        <p>Ex3 Q1: nhập tên, hiện tên</p>
+        <label for="input3_1">Name: </label>
+        <input type="text" name="input3_1" id="input3_1">
+        <button id="button3_1">Show Value</button>
+        <script>
+            $("#button3_1").click(function() {
+                var txt = $("#input3_1").val();
+                if (txt !== "") {
+                    alert("Value = " + txt);
+                }
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>

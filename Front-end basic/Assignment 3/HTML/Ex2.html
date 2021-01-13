@@ -9,12 +9,101 @@
 
 <body>
     <div>
+        <h1 class="textInCenter">Flow control</h1>
         <p>Câu 1: Kiểm tra department của account số 2:</p>
         <button onclick="checkDept(2)" class="button button1">
-            Check
+            Check dept
         </button>
+        <p id="label"></p>
+        <br>
+        <p>Câu 2: Kiểm tra group của account số 2:</p>
+        <button onclick="checkGr(2)" class="button button2">
+            check gr
+        </button>
+        <p id="lable1"></p>
+        <br>
+        <p>Câu 4: Kiểm tra xem account số 1 có phải Dev không:</p>
+        <button onclick="checkDev(1)" class="button button1">
+            check
+        </button>
+        <p id="lable2"></p>
+        <br>
+        <p>Câu 5: Lấy ra số lượng account trong group thứ nhất</p>
+        <label for="amountGr1">Số lượng account của group 1</label>
+        <input type="text" id="amountGr1" width="30%" value=""> <button onclick="printAmountOfEmpls(1)" class="button button2">Search</button>
+        <br>
     </div>
+    <div>
+        <h1 class="textInCenter">Method</h1>
+        <p>Câu 1: Tạo method để in ra các số chắn nguyên dương nhỏ hơn 10</p>
+        <button class="button button1" onclick="showEvenInt()">show</button>
+        <br>
+        <p>Câu 2: Tạo method in ra thông tin các account</p>
+        <button onclick="printAcc()">print</button>
+        <p id="acc"></p>
+        <br>
+        <p>Câu 3: Tạo method in ra các số nguyên dương nhỏ hơn 10</p>
+        <button onclick="printPlusInt()">print</button>
+    </div>
+    <div>
+        <h1 class="textInCenter">Program</h1>
+        <p>Câu 1: Viết chương trình kiểm tra một số chẵn hay lẻ</p>
+        <button onclick="checkNumOddOrEven()">Run</button>
+        <br>
+        <p>Câu 2: Viết chương trình kiểm tra điểm</p>
+        <button onclick="checkScore()">Check</button>
+        <br>
+        <p>Câu 3: Viết chương trình tính thời gian</p>
+        <button onclick="CalculateTime()">Calculate</button>
+        <br>
+        <p>Câu 4: Viết chương trình kiểm tra điểm tín chỉ</p>
+        <button onclick="checkTinchi()">Check</button>
+        <p id="Tinchi"></p>
+        <br>
+        <p>Câu 5: Viết chương trình để đếm số ngày trong tháng</p>
+        <table style="width: 50%; border-collapse: collapse;" align="center">
+            <tr>
+                <td style="width: 40%;">
+                    Nhập tháng</td>
+                <td>
+                    <input type="number" name="" id="month4" min="1" max="12">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">Nhập năm</td>
+                <td>
+                    <input type="number" name="" id="year4" min="0">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">Số ngày trong tháng</td>
+                <td><button onclick="checkAmoutOfDayInMonth()">Check</button>
+                    <pre style="display: inline; font-family: 'Times New Roman', Times, serif;">  Kết quả: </pre><i id="songaytrongthang"></i></td>
+            </tr>
+        </table>
+        <br>
+        <p>Câu 6: Đếm số chia hết cho 2</p>
+        <table style="border-collapse: collapse; width: 50%;" align="center">
+            <tr>
+                <td style="width: 40%;">Nhập một số (1-100)</td>
+                <td><input type="number" name="" id="num6" min="1" max="100"></td>
+            </tr>
+            <tr>
+                <td style="width: 40%;"><button onclick="check6()">Check</button></td>
+                <td>
+                    <p style="display: inline;" id="p6"></p>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p>Câu 7: In các số trong ô input</p>
+        <input type="number" name="" id="num7" min="1"><i>  </i>
+        <button onclick="printNum()">Show</button><br>
+        <input type="text" name="" id="text7">
+    </div>
+
 </body>
+<!-- <script src="../JavaScript/Ex2.js"></script> -->
 <script src="../JavaScript/Ex2.js"></script>
 
 </html>

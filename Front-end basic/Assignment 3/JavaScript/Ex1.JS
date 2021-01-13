@@ -107,31 +107,24 @@ var gr4 = new Group(4, "Câu đối đỏ", [1, 3, 5], 4, "2020-01-06");
 
 // In ra đối đượng Department
 function printDept1() {
-    var add = document.createElement("p");
-    add.style.display = "inline";
-    add.innerHTML = "ID = " + dept1.departmentID + "; Name = " + dept1.departmentName;
-    document.getElementById("dept").appendChild(add);
+
+    var result = "ID = " + dept1.departmentID + "; Name = " + dept1.departmentName;
+    document.getElementById("dept").innerHTML = result;
 }
 
 function printPot1() {
-    var add = document.createElement("p");
-    add.style.display = "inline";
-    add.innerHTML = "ID = " + pot1.positionID + "; Name = " + pot1.positionName;
-    document.getElementById("pot").appendChild(add);
+    var result = "ID = " + pot1.positionID + "; Name = " + pot1.positionName;
+    document.getElementById("pot").innerHTML = result;
 }
 
 function printAcc1() {
-    var add = document.createElement("p");
-    add.style.display = "inline";
-    add.innerHTML = "ID = " + acc1.accountID + "; Email = " + acc1.email + "; Username = " + acc1.userName +
+    var result = "ID = " + acc1.accountID + "; Email = " + acc1.email + "; Username = " + acc1.userName +
         "; FullName = " + acc1.fullName + "; Department = " + acc1.Department.departmentName + "; Position = " + acc1.Position.positionName + "; CreateDate = " + acc1.createDate;
-    document.getElementById("acc").appendChild(add);
+    document.getElementById("acc").innerHTML = result;
 }
 
 function printGr1() {
-    var add = document.createElement("p");
-    add.style.display = "inline";
     var idOfMems = JSON.stringify(gr1.listOfAccsInGr);
-    add.innerHTML = "ID = " + gr1.groupID + "; Name = " + gr1.groupName + "; ID of members = " + idOfMems + "; CreatorID = " + gr1.creator.accountID + "; Join Date = " + gr1.joinDate;
-    document.getElementById("gr").appendChild(add);
+    var result = "ID = " + gr1.groupID + "; Name = " + gr1.groupName + "; ID of members = " + idOfMems + "; CreatorID = " + gr1.creator.accountID + "; Join Date = " + gr1.createDate;
+    document.getElementById("gr").innerHTML = result;
 }

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Assignment 3</title>
+    <link rel="stylesheet" href="../CSS/Library1.css">
+    <style>
+        table,
+        td {
+            border: 1px solid black;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p>Ex4 Câu 1</p>
+        <button onclick="Alert1()" class="button button1">
+            Click me!
+        </button>
+    </div>
+    <script>
+        function Alert1() {
+            window.alert("Hello World !");
+        }
+    </script>
+    <br>
+    <div>
+        <p>Ex4 Câu 2</p>
+
+    </div>
+    <script>
+        document.write("Hello World !");
+    </script>
+    <br>
+    <br>
+    <div>
+        <p>Ex4 Câu 3</p>
+    </div>
+    <script>
+        console.log("Hello World !");
+    </script>
+    <br>
+
+    <div>
+        <p>
+            Ex4 Câu 4
+        </p>
+        <button onclick="Alert2()" class="button button2">
+            Click me!
+        </button>
+    </div>
+    <script>
+        function Alert2() {
+            confirm("Bạn có đồng ý yêu không");
+        }
+    </script>
+    <br>
+    <div>
+        <p>Ex4 Câu 5: </p>
+        <label for="">Name: </label>
+        <input type="text" id="text" placeholder="Mời nhập tên" value="">
+        <button onclick="Click()">Click here</button>
+        <script>
+            function Click() {
+                var text = document.getElementById("text").value;
+                if (text !== null) {
+                    alert(text);
+                }
+            }
+        </script>
+    </div>
+    <br>
+    <div>
+        <p>Ex4 Câu 6:</p>
+        <button onclick="run6()">Run</button>
+        <br>
+        <span id="span6"></span>
+        <script>
+            function run6() {
+                var txt1 = prompt("Bạn hãy nhập vào tên", "");
+                var txt2 = prompt("Bạn hãy nhập vào tuổi", "");
+                txt1 = "Chào bạn: <b>" + txt1 + "</b>";
+                txt2 = "Tuổi của bạn là: " + txt2;
+                document.getElementById("span6").innerHTML = txt1 + "<br>" + txt2;
+            }
+        </script>
+    </div>
+    <br>
+    <div>
+        <p>Ex4 Câu 7</p>
+        <button onclick="Time2()">Alert Time</button>
+
+    </div>
+    <script>
+        function Time2() {
+            var gio = new Date().getHours();
+            var phut = new Date().getMinutes();
+
+            alert("Bây giờ là: " + gio + " giờ " + phut + " phút");
+        }
+    </script>
+    <br>
+    <div>
+        <p>Ex4 Câu 8:</p>
+        <button onclick="run8()">Run</button>
+        <br>
+        <span id="span8"></span>
+        <script>
+            function run8() {
+                var txt1 = prompt("Bạn hãy nhập vào tên", "");
+                var txt2 = prompt("Bạn hãy nhập vào giới tính", "");
+                var txt3 = prompt("Bạn hãy nhập vào email", "");
+                var account1 = {
+                    name: txt1.trim(),
+                    gender: txt2.trim(),
+                    email: txt3.trim()
+                };
+                txt1 = "Name: " + account1.name + "<br>";
+                txt2 = "Gender: " + account1.gender + "<br>";
+                txt3 = "Email: " + account1.email;
+
+                document.getElementById("span8").innerHTML = txt1 + txt2 + txt3;
+            }
+        </script>
+    </div>
+    <br>
+    <div>
+        <p>Ex4 Câu 9:</p>
+        <script>
+            var result = (5 > 10);
+            document.write("kết quả: " + result);
+        </script>
+    </div>
+    <br>
+    <div>
+        <div>
+            <p>Ex4 Câu 10:</p>
+            <label for="no1">Nhập số thứ nhất: </label>
+            <input type="number" id="no1" value="">
+            <br>
+            <label for="no2">Nhập số thứ hai:</label>
+            <input type="number" id="no2" value="">
+            <button onclick="Calculate()">Calculate</button>
+
+            <p>Tổng của hai số là: <i id="tong"></i></p>
+            <p>Hiệu của hai số là: <i id="hieu"></i></p>
+            <p>Tích của hai số là: <i id="tich"></i></p>
+            <p>Thương của hai số là: <i id="thuong"></i></p>
+            <p> Số thứ nhất chia số thứ hai dư: <i id="chiadu"></i></p>
+        </div>
+        <script>
+            function Calculate() {
+                var a = document.getElementById("no1").value;
+                var b = document.getElementById("no2").value;
+                var tong = 0;
+                var hieu = 0;
+                var tich = 0;
+                var thuong = 0;
+                var chiadu = 0;
+                if (a !== null & b !== null & b !== 0) {
+
+                    tong = -(-a + -b);
+                    hieu = a - b;
+                    tich = a * b;
+                    thuong = a / b;
+                    chiadu = a % b;
+
+                    document.getElementById("tong").innerHTML = tong;
+                    document.getElementById("hieu").innerHTML = hieu;
+                    document.getElementById("tich").innerHTML = tich;
+                    document.getElementById("thuong").innerHTML = thuong;
+                    document.getElementById("chiadu").innerHTML = chiadu;
+                }
+            }
+        </script>
+        <div>
+            <p>Ex8 Câu 1: </p>
+            <label for="num1">Number 1: </label>
+            <input type="number" id="num1" value="">
+            <br>
+            <label for="num2">Number 2:</label>
+            <input type="number" id="num2" value="">
+            <br>
+            <br>
+            <button onclick="click1()">Cộng</button><button onclick="click2()">Trừ</button>
+            <button onclick="click3()">Nhân</button><button onclick="click4()">Chia</button>
+            <button onclick="click5()">%</button> <label for="result">Kết quả</label> <input type="number" id="result" value="">
+        </div>
+        <script>
+            function click1() {
+                var a = document.getElementById("num1").value;
+                var b = document.getElementById("num2").value;
+                document.getElementById("result").value = -(-a + -b);
+            }
+
+            function click2() {
+                var a = document.getElementById("num1").value;
+                var b = document.getElementById("num2").value;
+                document.getElementById("result").value = a - b;
+            }
+
+            function click3() {
+                var a = document.getElementById("num1").value;
+                var b = document.getElementById("num2").value;
+                document.getElementById("result").value = a * b;
+            }
+
+            function click4() {
+                var a = document.getElementById("num1").value;
+                var b = document.getElementById("num2").value;
+                document.getElementById("result").value = a / b;
+            }
+
+            function click5() {
+                var a = document.getElementById("num1").value;
+                var b = document.getElementById("num2").value;
+                document.getElementById("result").value = a % b;
+            }
+        </script>
+        <div style="display: inline;">
+            <p>Ex8 Câu 6:</p>
+            <h1 class="textInCenter">Form khảo sát thông tin cá nhân:</h1>
+            <div>
+                <table style="border: 1px solid;width: 60%; border-collapse: collapse;" align="center">
+                    <tr>
+                        <td>Họ tên:</td>
+                        <td><input type="text" name="name" id="hoten"></td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại:</td>
+                        <td><input type="text" name="phone" id="sdt"></td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính:</td>
+                        <td>
+                            <input type="radio" name="gender" id="nam" value="Nam" checked>Nam
+                            <input type="radio" name="gender" id="nữ" value="Nữ">Nữ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sở thích</td>
+                        <td>
+                            <input type="checkbox" name="hobie" id="hob1" value="Nghe nhạc">
+                            <label for="hob1">Nghe nhạc</label>
+                            <br>
+                            <input type="checkbox" name="hobie" id="hob2" value="Bóng đá">
+                            <label for="hob2">Bóng đá</label>
+                            <br>
+                            <input type="checkbox" name="hobie" id="hob3" value="Du lịch">
+                            <label for="hob3">Du lịch</label>
+                            <br>
+                            <input type="checkbox" name="hobie" id="hob4" value="Đọc sách">
+                            <label for="hob4">Đọc sách</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div style="text-align: center;">
+                <button onclick="myfunction()">
+                    Hiển thị
+                </button>
+            </div>
+
+            <script>
+                function myfunction() {
+                    var hoten = document.getElementById("hoten").value;
+                    var sdt = document.getElementById("sdt").value;
+                    var gioitinh = document.getElementsByName("gender");
+                    var valueOfGender;
+                    for (i = 0; i < gioitinh.length; i++) {
+                        if (gioitinh[i].checked) {
+                            valueOfGender = gioitinh[i].value;
+                        }
+                    }
+                    var sothich = document.getElementsByName("hobie");
+                    var valueOfHobie = "";
+                    for (i = 0; i < sothich.length; i++) {
+                        if (sothich[i].checked) {
+                            valueOfHobie += sothich[i].value + ", ";
+                        }
+                    }
+                    if (hoten !== null & sdt !== null) {
+                        alert("Họ tên: " + hoten + ", số đt: " + sdt + ", giới tính: " + valueOfGender + ", sở thích: " + valueOfHobie);
+                    }
+                }
+            </script>
+        </div>
+        <br>
+        <div>
+            <p>Ex8 Câu 7:</p>
+            <script>
+            </script>
+        </div>
+</body>
+
+</html>
